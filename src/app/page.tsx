@@ -1,12 +1,12 @@
-import Image from "next/image";
-import Navbar from "../../components/Navbar";
+"use client"
 
-export default function Home() {
+import * as React from "react"
+import Navbar from "@/components/ui/Navabar"
+
+export default function Home() {  
+
   return (
-    
-    <main className="">
+    <main>
       <Navbar />
-      <h1>HI</h1>
     </main>
-  );
-}
+)}
