@@ -15,9 +15,12 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import Link from "next/link";
+import axios from 'axios';
+import { useDispatch, useSelector } from '../../store/store';
+import { getUserState, setUser } from '../../store/slices/userSlice';
 
 const formSchema = z.object({
-  username: z.string().min(2, {
+  name: z.string().min(2, {
     message: "Username must be at least 2 characters.",
   }),
   password: z.string().min(2, {
@@ -25,17 +28,41 @@ const formSchema = z.object({
   }),
 });
 
+// const router = useRouter();
+
 export function UserForm() {
+  const dispatch = useDispatch();
+  // const userState = useSelector(getUserState);
+
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      username: "",
+      name: "",
+      password: "",
     },
   });
-  function onSubmit(values: z.infer<typeof formSchema>) {
-    // Do something with the form values.
-    // ✅ This will be type-safe and validated.
-    console.log(values);
+  
+  async function onSubmit(values: z.infer<typeof formSchema>) {
+   try {
+    const response = await axios.post('http://localhost:8080/api/v1/users/login', values)
+    console.log(response);
+
+    dispatch(
+      setUser({
+        user_id: response.data.data.user_id,
+        name: response.data.data.name,
+        password: response.data.data.password,
+        address: response.data.data.address,
+        email: response.data.data.email,
+        dob: response.data.data.dob,
+      })
+    );
+    
+    // router.push('/');
+   } catch (error) {
+    console.error('Error submitting form:', error);
+   }
+    // console.log(values);
   }
 
   return (
@@ -46,7 +73,7 @@ export function UserForm() {
       >
         <FormField
           control={form.control}
-          name="username"
+          name="name"
           render={({ field }) => (
             <FormItem>
               <FormLabel>Username</FormLabel>

@@ -1,18 +1,19 @@
 "use client";
 import Navbar from "@/components/ui/Navabar";
 import { UserForm } from "@/components/ui/user-form";
-import React, { useEffect, useState } from "react";
+import { store } from '../../store/store';
+import React from "react";
+import { Provider } from "react-redux";
 
 function Login() {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   return (
-    <div>
+    <Provider store={store}>
       <Navbar />
       <div className="flex justify-center items-center">
         <UserForm />
       </div>
-    </div>
+    </Provider>
   );
 }
 
