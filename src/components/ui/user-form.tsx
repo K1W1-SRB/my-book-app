@@ -19,20 +19,20 @@ import axios from 'axios';
 import { useDispatch, useSelector } from '../../store/store';
 import { getUserState, setUser } from '../../store/slices/userSlice';
 
+
+
 const formSchema = z.object({
   name: z.string().min(2, {
     message: "Username must be at least 2 characters.",
   }),
   password: z.string().min(2, {
-    message: "Password must be at least 2 characters.",
+    message: "Password must be at least 2 characters",
   }),
 });
 
-// const router = useRouter();
 
 export function UserForm() {
   const dispatch = useDispatch();
-  // const userState = useSelector(getUserState);
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -57,12 +57,9 @@ export function UserForm() {
         dob: response.data.data.dob,
       })
     );
-    
-    // router.push('/');
    } catch (error) {
     console.error('Error submitting form:', error);
    }
-    // console.log(values);
   }
 
   return (
@@ -101,7 +98,7 @@ export function UserForm() {
             </FormItem>
           )}
         />
-        <div className="flex items-center justify-betweenp">
+        <div className="flex items-center justify-between">
           <Button type="submit">Submit</Button>
           <Link className="p-2" href="/register">
             Register

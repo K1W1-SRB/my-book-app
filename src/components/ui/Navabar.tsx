@@ -4,7 +4,7 @@ import { Menu } from "lucide-react"
 import { Button } from "./button"
 import { ModeToggle } from "./theme-toggle"
 
-export default function Navbar() {
+export default function Navbar({}) {
   const [state, setState] = React.useState(false)
 
   const menus = [
@@ -12,7 +12,6 @@ export default function Navbar() {
     { title: "BookCase's", path: "/your-path" },
     { title: "Profile", path: "/your-path" },
   ]
-
   return (
     <nav className="w-full border-b md:border-0 ">
       <div className="items-center px-4 max-w-screen-xl mx-auto md:flex md:px-8">

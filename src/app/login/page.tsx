@@ -1,19 +1,29 @@
 "use client";
 import Navbar from "@/components/ui/Navabar";
 import { UserForm } from "@/components/ui/user-form";
-import { store } from '../../store/store';
 import React from "react";
-import { Provider } from "react-redux";
+import { useSelector } from "react-redux";
+import { getUserState, isLoggedIn } from "@/store/slices/userSlice";
 
 function Login() {
+  const user = useSelector(getUserState);
+  const userLoggedIn = useSelector(isLoggedIn);
+  console.log(user);
+  console.log(userLoggedIn);
 
   return (
-    <Provider store={store}>
-      <Navbar />
-      <div className="flex justify-center items-center">
-        <UserForm />
-      </div>
-    </Provider>
+    <div>
+        <Navbar />
+        <div className="flex justify-center items-center">
+          {userLoggedIn ? (
+            // JSX to display when user is logged in
+            <div>Welcome! You are logged in.</div>
+          ) : (
+            // JSX to display when user is not logged in
+            <UserForm />
+          )}
+        </div>
+    </div>
   );
 }
 

@@ -6,7 +6,7 @@ export interface UserState {
   password: string;
   address: string;
   email: string;
-  dob: Date;
+  dob: ''
 }
 
 const initialState: UserState = {
@@ -23,13 +23,25 @@ export const userSlice = createSlice({
   initialState,
   reducers: {
     setUser: (state, action: PayloadAction<UserState>) => {
-      return { ...state, ...action.payload };
+      return { ...state, ...action.payload, isLoggedIn: true  };
     },
   },
 });
 
 // A small helper of user state for `useSelector` function.
 export const getUserState = (state: { user: UserState }) => state.user;
+
+// Selectors
+export const isLoggedIn = (state: { user: UserState }) => {
+  const { user } = state;
+  if (!user) {
+    return false; // Return false if user state is undefined
+  }
+
+  const { user_id, name, password, address, email, dob } = user;
+  return !!user_id || !!name || !!password || !!address || !!email || !!dob;
+};
+
 
 // Exports all actions
 export const { setUser } = userSlice.actions;
